@@ -2,9 +2,10 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Hotel } from '../../model/hotel';
 import { hotelService } from '../../services/hotelService';
 import { User } from '../../model/user';
-import { HotelsTable } from './components/table';
+import { HotelsTable } from './components/hotelsTable';
 import { Filter } from './components/filter';
 import { Paper } from '@material-ui/core';
+import { toast } from 'react-toastify';
 
 import './styles.scss';
 
@@ -32,13 +33,25 @@ export const DashboardPage = (props: Props) => {
         setFilteredHotels(auxHotels);
     }
 
+    const removeHotel = (hotelId: number) => {
+
+        if (window.confirm('¿Desea eliminar este hotel?')) {
+            hotelService.removeHotel(hotelId).then((hotels) => {
+                setHotels(hotels);
+                setFilteredHotels(hotels);
+
+                toast('Hotel eliminado correctamente', { type: 'success' });
+            }).catch((_) => toast('Error al eliminar el hotel', { type: 'error' }));
+        }
+    }
+
     return (
         <Fragment>
             <Filter filterText={filterText} onChangeFilterText={onChangeFilterText} />
             <Paper elevation={2} className="hotelsListContainer">
                 <h3>Listado de hoteles</h3>
-                <HotelsTable hotels={filteredHotels} />
-            </Paper>            
+                <HotelsTable hotels={filteredHotels} removeHotel={removeHotel} />
+            </Paper>
         </Fragment>
     );
 

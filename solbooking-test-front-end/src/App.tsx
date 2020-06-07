@@ -3,6 +3,9 @@ import './App.scss';
 import { DashboardPage } from './pages/dashboard';
 import { User } from './model/user';
 import { Header } from './common/components/header';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const mockUser: User = {
   id: 1,
@@ -13,12 +16,13 @@ const mockUser: User = {
 
 const App = () => (
   <Fragment>
-    <Header name={mockUser.name}/>
+    <Header name={mockUser.name} />
     <div className="container">
       <DashboardPage user={mockUser} />
     </div>
+    <ToastContainer />
   </Fragment>
-  
+
 );
 
 export default App;
