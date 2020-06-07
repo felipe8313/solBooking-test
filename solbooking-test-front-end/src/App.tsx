@@ -1,7 +1,8 @@
-import React from 'react';
-import './App.css';
+import React, { Fragment } from 'react';
+import './App.scss';
 import { DashboardPage } from './pages/dashboard';
 import { User } from './model/user';
+import { Header } from './common/components/header';
 
 const mockUser: User = {
   id: 1,
@@ -11,7 +12,13 @@ const mockUser: User = {
 }
 
 const App = () => (
-  <DashboardPage user={mockUser} />
+  <Fragment>
+    <Header />
+    <div className="container">
+      <DashboardPage user={mockUser} />
+    </div>
+  </Fragment>
+  
 );
 
 export default App;
