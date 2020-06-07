@@ -4,6 +4,9 @@ import { hotelService } from '../../services/hotelService';
 import { User } from '../../model/user';
 import { HotelsTable } from './components/table';
 import { Filter } from './components/filter';
+import { Paper } from '@material-ui/core';
+
+import './styles.scss';
 
 interface Props {
     user: User;
@@ -32,7 +35,10 @@ export const DashboardPage = (props: Props) => {
     return (
         <Fragment>
             <Filter filterText={filterText} onChangeFilterText={onChangeFilterText} />
-            <HotelsTable hotels={filteredHotels} />
+            <Paper elevation={2} className="hotelsListContainer">
+                <h3>Listado de hoteles</h3>
+                <HotelsTable hotels={filteredHotels} />
+            </Paper>            
         </Fragment>
     );
 

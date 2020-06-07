@@ -13,7 +13,7 @@ const mockUser: User = {
 
 const App = () => (
   <Fragment>
-    <Header />
+    <Header name={mockUser.name}/>
     <div className="container">
       <DashboardPage user={mockUser} />
     </div>
