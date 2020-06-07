@@ -1,6 +1,6 @@
 import { Hotel } from "../model/hotel";
 
-export const mockHotels: Hotel[] = [
+export let mockHotels: Hotel[] = [
     {
         id: 1,
         address: 'Calle Falsa, 123',
