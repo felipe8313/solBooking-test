@@ -11,12 +11,14 @@ import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Hotel } from '../../../../model/hotel';
 import { IconButton } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
 import './styles.scss';
 
 interface Props {
     hotels: Hotel[];
     removeHotel(hotelId: number): void;
+    editHotel(hotelId: number): void;
 }
 
 export const HotelsTable = (props: Props) => {
@@ -59,6 +61,13 @@ export const HotelsTable = (props: Props) => {
                                 <TableCell>{hotel.phone}</TableCell>
                                 <TableCell>{hotel.mail}</TableCell>
                                 <TableCell>
+                                    <IconButton
+                                        aria-label="Editar hotel"
+                                        className="actionButton"
+                                        onClick={(_) => props.editHotel(hotel.id)}
+                                    >
+                                        <EditIcon />
+                                    </IconButton>
                                     <IconButton
                                         color="secondary"
                                         aria-label="Eliminar hotel"
