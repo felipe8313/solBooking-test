@@ -8,10 +8,15 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
 import Paper from '@material-ui/core/Paper';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { Hotel } from '../../../../model/hotel';
+import { IconButton } from '@material-ui/core';
+
+import './styles.scss';
 
 interface Props {
     hotels: Hotel[];
+    removeHotel(hotelId: number): void;
 }
 
 export const HotelsTable = (props: Props) => {
@@ -38,6 +43,7 @@ export const HotelsTable = (props: Props) => {
                         <TableCell>Address</TableCell>
                         <TableCell>Phone</TableCell>
                         <TableCell>Mail</TableCell>
+                        <TableCell>Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -52,6 +58,16 @@ export const HotelsTable = (props: Props) => {
                                 <TableCell>{hotel.address}</TableCell>
                                 <TableCell>{hotel.phone}</TableCell>
                                 <TableCell>{hotel.mail}</TableCell>
+                                <TableCell>
+                                    <IconButton
+                                        color="secondary"
+                                        aria-label="Eliminar hotel"
+                                        className="actionButton"
+                                        onClick={(_) => props.removeHotel(hotel.id)}
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </TableCell>
                             </TableRow>
                         ))
                     }
