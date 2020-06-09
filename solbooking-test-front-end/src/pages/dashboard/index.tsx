@@ -27,7 +27,7 @@ export const DashboardPage = (props: Props) => {
         hotelService.getHotelsByUser(props.user.id).then((hotels) => {
             setHotels(hotels);
             setFilteredHotels(hotels);
-        });
+        }).catch((_) => toast('Error al obtener el listado de hoteles', { type: 'error' }));
     }, [props.user.id]);
 
     const onChangeFilterText = (newFilterText: string) => {
