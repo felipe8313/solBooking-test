@@ -28,9 +28,19 @@ const removeHotel = (hotelId: number): Promise<Hotel[]> => {
 
 const getHotelById = (hotelId: number): Promise<Hotel> => {
 
-    const hotel = mockHotels.filter((hotel) => hotel.id === hotelId);
+    const request: RequestInit = {
+        ...requestConfig,
+    };
 
-    return Promise.resolve(hotel[0]);
+    return fetch(hotelsRoutes.getHotelById.replace(':hotelId', hotelId.toString()), request)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+
+            throw new Error('Error loading hotel');
+        })
+        .then(hotel => hotel);
 }
 
 const updateHotel = (hotel: Hotel): Promise<boolean> => {

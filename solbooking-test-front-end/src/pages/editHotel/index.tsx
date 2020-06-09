@@ -16,7 +16,10 @@ export const EditHotel = (props: any) => {
     const history = useHistory();
 
     useEffect(() => {
-        hotelService.getHotelById(+props.match.params.id).then((hotel) => setHotel(hotel));
+        hotelService.getHotelById(+props.match.params.id)
+            .then((hotel) => setHotel(hotel))
+            .catch((_) => toast('Error al obtener el hotel', { type: 'error' }));
+
     }, [props.match.params.id]);
 
     const editField = (event: any) => {
