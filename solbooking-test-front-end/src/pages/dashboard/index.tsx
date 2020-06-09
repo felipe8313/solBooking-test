@@ -24,11 +24,15 @@ export const DashboardPage = (props: Props) => {
     const history = useHistory();
 
     useEffect(() => {
+        getHotelList();
+    }, []);
+
+    const getHotelList = () => {
         hotelService.getHotelsByUser(props.user.id).then((hotels) => {
             setHotels(hotels);
             setFilteredHotels(hotels);
         }).catch((_) => toast('Error al obtener el listado de hoteles', { type: 'error' }));
-    }, [props.user.id]);
+    }
 
     const onChangeFilterText = (newFilterText: string) => {
         var auxHotels = hotels.filter((hotel) => hotel.name.toLocaleUpperCase().includes(newFilterText.toLocaleUpperCase()));
@@ -40,10 +44,14 @@ export const DashboardPage = (props: Props) => {
     const removeHotel = (hotelId: number) => {
 
         if (window.confirm('¿Desea eliminar este hotel?')) {
-            hotelService.removeHotel(hotelId).then((hotels) => {
-                setHotels(hotels);
-                setFilteredHotels(hotels);
+            hotelService.deleteHotel(hotelId).then((result) => {
 
+                if(result) {
+                    getHotelList();
+                } else {
+                    toast('Hotel eliminado correctamente', { type: 'success' });    
+                }
+                
                 toast('Hotel eliminado correctamente', { type: 'success' });
             }).catch((_) => toast('Error al eliminar el hotel', { type: 'error' }));
         }

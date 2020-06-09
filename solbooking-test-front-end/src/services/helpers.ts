@@ -1,6 +1,7 @@
 export const apiMethods = {
     GET: 'GET',
     POST: 'POST',
+    DELETE: 'DELETE'
   };
 
 export const requestConfig: RequestInit = {

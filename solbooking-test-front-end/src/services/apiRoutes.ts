@@ -5,4 +5,5 @@ const hotelsBasePath = `${serverURL}hotel/`;
 export const hotelsRoutes = {
     getHotelsByUserId: `${hotelsBasePath}getHotelsByUserId/:userId`,
     getHotelById: `${hotelsBasePath}getHotelById/:hotelId`,
+    deleteHotel: `${hotelsBasePath}deleteHotel/:hotelId`,
 }

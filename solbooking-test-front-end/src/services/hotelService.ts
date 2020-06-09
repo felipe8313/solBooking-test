@@ -1,7 +1,6 @@
 import { Hotel } from '../model/hotel';
-import { mockHotels } from './mockData';
 import { hotelsRoutes } from './apiRoutes';
-import { requestConfig } from './helpers';
+import { requestConfig, apiMethods } from './helpers';
 
 const getHotelsByUser = (userId: number): Promise<Hotel[]> => {
     const request: RequestInit = {
@@ -19,11 +18,22 @@ const getHotelsByUser = (userId: number): Promise<Hotel[]> => {
         .then(hotels => hotels);
 }
 
-const removeHotel = (hotelId: number): Promise<Hotel[]> => {
+const deleteHotel = (hotelId: number): Promise<boolean> => {
     
-    const hotels = mockHotels.filter((hotel) => hotel.id !== hotelId);
+    const request: RequestInit = {
+        ...requestConfig,
+        method: apiMethods.DELETE
+    };
 
-    return Promise.resolve(hotels);
+    return fetch(hotelsRoutes.deleteHotel.replace(':hotelId', hotelId.toString()), request)
+        .then(response => {
+            if (response.ok) {
+                return Promise.resolve(true);
+            }
+
+            throw new Error('Error deleting hotel');
+        })
+        .then(result => result);
 }
 
 const getHotelById = (hotelId: number): Promise<Hotel> => {
@@ -50,7 +60,7 @@ const updateHotel = (hotel: Hotel): Promise<boolean> => {
 
 export const hotelService = {
     getHotelsByUser,
-    removeHotel,
+    deleteHotel,
     getHotelById,
     updateHotel
 }
