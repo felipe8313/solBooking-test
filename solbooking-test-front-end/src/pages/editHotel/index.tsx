@@ -15,15 +15,20 @@ export const EditHotel = (props: any) => {
 
     const history = useHistory();
 
+    const hotelId = props.match.params.id;
+
     useEffect(() => {
-        hotelService.getHotelById(+props.match.params.id)
-            .then((hotel) => setHotel(hotel))
-            .catch((_) => toast('Error al obtener el hotel', { type: 'error' }));
+
+        if (hotelId > 0) {
+            hotelService.getHotelById(+props.match.params.id)
+                .then((hotel) => setHotel(hotel))
+                .catch((_) => toast('Error al obtener el hotel', { type: 'error' }));
+        }
 
     }, [props.match.params.id]);
 
     const editField = (event: any) => {
-        
+
         const name = event.target.name;
         const value = event.target.value;
 
@@ -39,20 +44,42 @@ export const EditHotel = (props: any) => {
 
             toast('Todos los campos son obligatorios', { type: 'error' });
         } else if (!validateEmail(hotel.mail)) {
-             
+
             toast('Introduzca un email correcto', { type: 'error' });
         } else {
-            hotelService.updateHotel(hotel).then((result) => {
 
-                if (result) {
-                    toast('Hotel guardado correctamente', { type: 'success' });
-                    history.push(routes.home);
-                } else {
-                    toast('Ya existe un hotel con ese nombre', { type: 'error' });
-                }
-                
-            }).catch((_) => toast('Error al guardar el hotel', { type: 'error' }));
+            if (hotelId > 0) {
+                updateHotel();
+            } else {
+                createHotel();
+            }
         }
+    }
+
+    const updateHotel = () => {
+        hotelService.updateHotel(hotel).then((result) => {
+
+            if (result) {
+                toast('Hotel guardado correctamente', { type: 'success' });
+                history.push(routes.home);
+            } else {
+                toast('Ya existe un hotel con ese nombre', { type: 'error' });
+            }
+
+        }).catch((_) => toast('Error al guardar el hotel', { type: 'error' }));
+    }
+
+    const createHotel = () => {
+        hotelService.createHotel(hotel, 1).then((result) => {
+
+            if (result) {
+                toast('Hotel guardado correctamente', { type: 'success' });
+                history.push(routes.home);
+            } else {
+                toast('Ya existe un hotel con ese nombre', { type: 'error' });
+            }
+
+        }).catch((_) => toast('Error al guardar el hotel', { type: 'error' }));
     }
 
     return (
@@ -65,9 +92,11 @@ export const EditHotel = (props: any) => {
                         <TextField className="input" name="address" label="Dirección" value={hotel.address} onChange={editField} />
                         <TextField className="input" name="phone" label="Teléfono" value={hotel.phone} onChange={editField} />
                         <TextField className="input" name="mail" label="Mail" value={hotel.mail} onChange={editField} />
-                        <Button variant="contained" color="primary" onClick={saveHotel}>
-                            Guardar
-                        </Button>
+                        <div>
+                            <Button variant="contained" color="primary" onClick={saveHotel}>
+                                Guardar
+                            </Button>
+                        </div>
                     </Paper>
                 )
             }

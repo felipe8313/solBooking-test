@@ -69,7 +69,28 @@ const updateHotel = (hotel: Hotel): Promise<boolean> => {
                 return Promise.resolve(false);
             }
 
-            throw new Error('Error updating hotel');
+            throw new Error('Error saving hotel');
+        })
+        .then(result => result);
+}
+
+const createHotel = (hotel: Hotel, userId: number): Promise<boolean> => {
+
+    const request: RequestInit = {
+        ...requestConfig,
+        method: apiMethods.POST,
+        body: JSON.stringify({ ...hotel, userId })
+    };
+
+    return fetch(hotelsRoutes.createHotel, request)
+        .then(response => {
+            if (response.ok) {
+                return Promise.resolve(true);
+            } else if (response.status === 409) {
+                return Promise.resolve(false);
+            }
+
+            throw new Error('Error creating hotel');
         })
         .then(result => result);
 }
@@ -78,5 +99,6 @@ export const hotelService = {
     getHotelsByUser,
     deleteHotel,
     getHotelById,
-    updateHotel
+    updateHotel,
+    createHotel
 }

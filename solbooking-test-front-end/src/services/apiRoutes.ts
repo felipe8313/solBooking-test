@@ -7,4 +7,5 @@ export const hotelsRoutes = {
     getHotelById: `${hotelsBasePath}getHotelById/:hotelId`,
     deleteHotel: `${hotelsBasePath}deleteHotel/:hotelId`,
     updateHotel: `${hotelsBasePath}updateHotel`,
+    createHotel: `${hotelsBasePath}createHotel`,
 }

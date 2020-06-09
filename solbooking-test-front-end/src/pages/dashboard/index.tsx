@@ -4,9 +4,10 @@ import { hotelService } from '../../services/hotelService';
 import { User } from '../../model/user';
 import { HotelsTable } from './components/hotelsTable';
 import { Filter } from './components/filter';
-import { Paper } from '@material-ui/core';
+import { Paper, Button } from '@material-ui/core';
 import { toast } from 'react-toastify';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
 
 import './styles.scss';
 import { routes } from '../../utils/routes';
@@ -46,12 +47,12 @@ export const DashboardPage = (props: Props) => {
         if (window.confirm('¿Desea eliminar este hotel?')) {
             hotelService.deleteHotel(hotelId).then((result) => {
 
-                if(result) {
+                if (result) {
                     getHotelList();
                 } else {
                     toast('Hotel eliminado correctamente', { type: 'success' });
                 }
-                
+
                 toast('Hotel eliminado correctamente', { type: 'success' });
             }).catch((_) => toast('Error al eliminar el hotel', { type: 'error' }));
         }
@@ -61,9 +62,18 @@ export const DashboardPage = (props: Props) => {
         history.push(routes.editHotel.replace(':id', hotelId.toString()));
     }
 
+    const newHotel = (_: any) => {
+        history.push(routes.editHotel.replace(':id', '0'));
+    }
+
     return (
         <Fragment>
             <Filter filterText={filterText} onChangeFilterText={onChangeFilterText} />
+            <div className="newHotelContainer">
+                <Button variant="contained" color="primary" onClick={newHotel} className="newHotelButton">
+                    <AddIcon /> Nuevo hotel
+                </Button>
+            </div>
             <Paper elevation={2} className="hotelsListContainer">
                 <h3>Listado de hoteles</h3>
                 <HotelsTable
