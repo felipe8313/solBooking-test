@@ -1,5 +1,13 @@
 import express from 'express'
 import bodyParser from 'body-parser';
+import sqlite3 from 'sqlite3';
+
+let db = new sqlite3.Database('solbooking.db', (err: any) => {
+    if (err) {
+        console.error(err.message);
+    }
+    console.log('Connected to the database.');
+});
 
 const app = express();
 
