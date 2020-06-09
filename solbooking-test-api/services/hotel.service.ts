@@ -1,5 +1,6 @@
 import sqlite3 from 'sqlite3';
 import { Hotel } from '../model/hotel';
+import { ServiceReturnCodes } from './utils';
 
 const getHotelsByUserId = (db: sqlite3.Database, userId: number): Promise<Hotel[]> => {
 
@@ -62,8 +63,38 @@ const deleteHotel = (db: sqlite3.Database, hotelId: number): Promise<boolean> =>
     });
 }
 
+const updateHotel = (db: sqlite3.Database, hotel: Hotel): Promise<ServiceReturnCodes> => {
+
+    const sqlCheckHotel = `SELECT * FROM Hotels WHERE Name = ? and Id != ?`;
+
+    const sqlUpdate = `UPDATE Hotels SET Name = ?, Address = ?, Phone = ?, Mail = ? WHERE Id = ?`;
+
+    return new Promise((resolve, reject) => {
+
+        db.get(sqlCheckHotel, [hotel.name, hotel.id], (err, row) => {
+            
+            if (err) {
+                resolve(ServiceReturnCodes.Error);
+            }
+
+            if (!row) {
+                db.run(sqlUpdate, [hotel.name, hotel.address, hotel.phone, hotel.mail, hotel.id], (err) => {
+                    if (err) {
+                        reject(ServiceReturnCodes.Error);
+                    }
+
+                    resolve(ServiceReturnCodes.Ok);
+                });
+            } else {
+                resolve(ServiceReturnCodes.DuplicateData);
+            }
+        });
+    });
+}
+
 export const hotelService = {
     getHotelsByUserId,
     getHotelById,
-    deleteHotel
+    deleteHotel,
+    updateHotel
 }
