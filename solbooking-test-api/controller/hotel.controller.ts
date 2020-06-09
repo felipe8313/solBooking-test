@@ -16,5 +16,18 @@ export const hotelController = (db: sqlite3.Database) => {
             }).catch((err) => res.status(500).json(err));
         });
 
+    hotelRouter.route('/getHotelById/:hotelId')
+        .get((req, res) => {
+
+            hotelService.getHotelById(db, +req.params.hotelId).then((hotel) => {
+
+                if (hotel) {
+                    res.status(200).json(hotel);
+                } else {
+                    res.status(404).json();
+                }
+            }).catch((err) => res.status(500).json(err));
+        });
+
     return hotelRouter;
 }

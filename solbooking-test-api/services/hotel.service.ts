@@ -22,6 +22,32 @@ const getHotelsByUserId = (db: sqlite3.Database, userId: number): Promise<Hotel[
     });
 };
 
+const getHotelById = (db: sqlite3.Database, hotelId: number): Promise<Hotel> => {
+    
+    const sql = `SELECT * FROM Hotels WHERE Id = ?`
+    
+    return new Promise((resolve, reject) => {
+        db.get(sql, [hotelId], (err, row) => {
+            if (err) {
+                reject(err);
+            }
+
+            if (!row) {
+                resolve(undefined);
+            } else {
+                resolve({
+                    id: row.Id,
+                    name: row.Name,
+                    address: row.Address,
+                    phone: row.Phone,
+                    mail: row.Mail
+                });
+            }
+        });
+    });
+}
+
 export const hotelService = {
-    getHotelsByUserId
+    getHotelsByUserId,
+    getHotelById
 }
