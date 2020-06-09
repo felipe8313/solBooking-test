@@ -49,7 +49,7 @@ export const DashboardPage = (props: Props) => {
                 if(result) {
                     getHotelList();
                 } else {
-                    toast('Hotel eliminado correctamente', { type: 'success' });    
+                    toast('Hotel eliminado correctamente', { type: 'success' });
                 }
                 
                 toast('Hotel eliminado correctamente', { type: 'success' });

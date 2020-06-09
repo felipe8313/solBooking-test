@@ -1,7 +1,8 @@
 export const apiMethods = {
     GET: 'GET',
     POST: 'POST',
-    DELETE: 'DELETE'
+    DELETE: 'DELETE',
+    PATCH: 'PATCH'
   };
 
 export const requestConfig: RequestInit = {

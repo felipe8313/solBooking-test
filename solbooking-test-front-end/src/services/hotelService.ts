@@ -19,7 +19,7 @@ const getHotelsByUser = (userId: number): Promise<Hotel[]> => {
 }
 
 const deleteHotel = (hotelId: number): Promise<boolean> => {
-    
+
     const request: RequestInit = {
         ...requestConfig,
         method: apiMethods.DELETE
@@ -55,7 +55,23 @@ const getHotelById = (hotelId: number): Promise<Hotel> => {
 
 const updateHotel = (hotel: Hotel): Promise<boolean> => {
 
-    return Promise.resolve(true);
+    const request: RequestInit = {
+        ...requestConfig,
+        method: apiMethods.PATCH,
+        body: JSON.stringify(hotel)
+    };
+
+    return fetch(hotelsRoutes.updateHotel, request)
+        .then(response => {
+            if (response.ok) {
+                return Promise.resolve(true);
+            } else if (response.status === 409) {
+                return Promise.resolve(false);
+            }
+
+            throw new Error('Error updating hotel');
+        })
+        .then(result => result);
 }
 
 export const hotelService = {

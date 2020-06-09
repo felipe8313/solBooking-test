@@ -44,10 +44,14 @@ export const EditHotel = (props: any) => {
         } else {
             hotelService.updateHotel(hotel).then((result) => {
 
-                toast('Hotel guardado correctamente', { type: 'success' });
-
-                history.push(routes.home);
-            });
+                if (result) {
+                    toast('Hotel guardado correctamente', { type: 'success' });
+                    history.push(routes.home);
+                } else {
+                    toast('Ya existe un hotel con ese nombre', { type: 'error' });
+                }
+                
+            }).catch((_) => toast('Error al guardar el hotel', { type: 'error' }));
         }
     }
 
