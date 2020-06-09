@@ -47,7 +47,23 @@ const getHotelById = (db: sqlite3.Database, hotelId: number): Promise<Hotel> => 
     });
 }
 
+const deleteHotel = (db: sqlite3.Database, hotelId: number): Promise<boolean> => {
+    
+    const sql = `DELETE FROM Hotels WHERE Id = ?`
+    
+    return new Promise((resolve, reject) => {
+        db.run(sql, [hotelId], (err) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(true);
+            }
+        });
+    });
+}
+
 export const hotelService = {
     getHotelsByUserId,
-    getHotelById
+    getHotelById,
+    deleteHotel
 }

@@ -29,5 +29,16 @@ export const hotelController = (db: sqlite3.Database) => {
             }).catch((err) => res.status(500).json(err));
         });
 
+    hotelRouter.route('/deleteHotel/:hotelId')
+        .delete((req, res) => {
+
+            hotelService.deleteHotel(db, +req.params.hotelId).then((result) => {
+
+                if (result) {
+                    res.status(200).json();
+                }
+            }).catch((err) => res.status(500).json(err));
+        });
+
     return hotelRouter;
 }
