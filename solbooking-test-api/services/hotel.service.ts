@@ -92,9 +92,39 @@ const updateHotel = (db: sqlite3.Database, hotel: Hotel): Promise<ServiceReturnC
     });
 }
 
+const createHotel = (db: sqlite3.Database, hotel: Hotel, userId: number): Promise<ServiceReturnCodes> => {
+
+    const sqlCheckHotel = `SELECT * FROM Hotels WHERE Name = ?`;
+
+    const sqlCreate = `INSERT INTO Hotels(Name, Address, Phone, Mail, UserId) VALUES (?, ?, ?, ?, ?)`;
+
+    return new Promise((resolve, reject) => {
+
+        db.get(sqlCheckHotel, [hotel.name], (err, row) => {
+            
+            if (err) {
+                resolve(ServiceReturnCodes.Error);
+            }
+
+            if (!row) {
+                db.run(sqlCreate, [hotel.name, hotel.address, hotel.phone, hotel.mail, userId], (err) => {
+                    if (err) {
+                        reject(ServiceReturnCodes.Error);
+                    }
+
+                    resolve(ServiceReturnCodes.Ok);
+                });
+            } else {
+                resolve(ServiceReturnCodes.DuplicateData);
+            }
+        });
+    });
+}
+
 export const hotelService = {
     getHotelsByUserId,
     getHotelById,
     deleteHotel,
-    updateHotel
+    updateHotel,
+    createHotel
 }
