@@ -1,0 +1,23 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run tsc && nodemon ./index.js localhost:4000",
+    "tsc": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.6",
+    "@types/sqlite3": "^3.1.6",
+    "body-parser": "^1.18.2",
+    "express": "^4.17.1",
+    "sqlite3": "^4.2.0",
+    "typescript": "^3.9.5"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.5"
+  }
+}
