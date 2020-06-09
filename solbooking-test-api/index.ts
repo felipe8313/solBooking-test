@@ -1,6 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser';
 import sqlite3 from 'sqlite3';
+import cors from 'cors';
 import { hotelController } from './controller/hotel.controller';
 
 let db = new sqlite3.Database('solbooking.db', (err: any) => {
@@ -11,6 +12,8 @@ let db = new sqlite3.Database('solbooking.db', (err: any) => {
 });
 
 const app = express();
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
