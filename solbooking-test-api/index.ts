@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import sqlite3 from 'sqlite3';
 import cors from 'cors';
 import { hotelController } from './controller/hotel.controller';
+import { userController } from './controller/user.controller';
 
 let db = new sqlite3.Database('solbooking.db', (err: any) => {
     if (err) {
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.raw());
 
 app.use('/api/hotel', hotelController(db));
+app.use('/api/user', userController(db));
 
 app.get('/', (req, res) => {
     res.send('Hola mundo');

@@ -70,7 +70,7 @@ export const hotelController = (db: sqlite3.Database) => {
         });
 
     hotelRouter.route('/createHotel')
-        .post((req, res, next) => {
+        .post((req, res) => {
 
             const hotel: Hotel = {
                 id: req.body.id,
