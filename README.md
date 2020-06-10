@@ -1,4 +1,4 @@
-This is the SolBooking technical test develop by candidate Felipe Ruiz Pinto.
+This is the SolBooking technical test developed by candidate Felipe Ruiz Pinto.
 
 The application uses the file-based database SQLite. You can access to the database using a DB browser https://sqlitebrowser.org/
 
