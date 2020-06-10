@@ -7,10 +7,12 @@ import { Paper, Button } from '@material-ui/core';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
+import { useMediaQuery } from 'react-responsive';
 
 import './styles.scss';
 import { routes } from '../../utils/routes';
 import { Header } from '../../common/components/header';
+import { HotelCard } from './components/hotelCard';
 
 export const DashboardPage = () => {
 
@@ -25,6 +27,8 @@ export const DashboardPage = () => {
     useEffect(() => {
         getHotelList();
     }, []);
+
+    const showCards = useMediaQuery({ query: '(max-width: 1024px)' })
 
     const getHotelList = () => {
         hotelService.getHotelsByUser(+userId).then((hotels) => {
@@ -76,11 +80,24 @@ export const DashboardPage = () => {
                 </div>
                 <Paper elevation={2} className="hotelsListContainer">
                     <h3>Listado de hoteles</h3>
-                    <HotelsTable
-                        hotels={filteredHotels}
-                        removeHotel={removeHotel}
-                        editHotel={editHotel}
-                    />
+                    {
+                        showCards ?
+                        (
+                            filteredHotels.map((hotel, idx) => (
+                                <HotelCard
+                                    hotel={hotel}
+                                    key={idx}
+                                    removeHotel={removeHotel}
+                                    editHotel={editHotel}
+                                />
+                            ))
+                        ) :
+                        <HotelsTable
+                            hotels={filteredHotels}
+                            removeHotel={removeHotel}
+                            editHotel={editHotel}
+                        />
+                    }
                 </Paper>
             </div>
         </Fragment>

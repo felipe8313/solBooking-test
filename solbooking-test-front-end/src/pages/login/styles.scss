@@ -25,3 +25,9 @@
 .logo {
     width: 50%;
 }
+
+@media (max-width: 1024px) {
+    .loginContainer {
+        width: 70%;
+    }
+  }
