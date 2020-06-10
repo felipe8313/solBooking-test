@@ -16,6 +16,8 @@ export const EditHotel = (props: any) => {
 
     const history = useHistory();
 
+    const userId = +sessionStorage.getItem('userId');
+
     const hotelId = +props.match.params.id;
 
     useEffect(() => {
@@ -71,7 +73,7 @@ export const EditHotel = (props: any) => {
     }
 
     const createHotel = () => {
-        hotelService.createHotel(hotel, 1).then((result) => {
+        hotelService.createHotel(hotel, userId).then((result) => {
 
             if (result) {
                 toast('Hotel guardado correctamente', { type: 'success' });
