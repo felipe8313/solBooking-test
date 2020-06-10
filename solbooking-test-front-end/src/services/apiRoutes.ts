@@ -1,11 +1,16 @@
 const serverURL = 'http://localhost:4000/api/';
 
-const hotelsBasePath = `${serverURL}hotel/`;
+const hotelBasePath = `${serverURL}hotel/`;
+const userBasePath = `${serverURL}user/`;
 
-export const hotelsRoutes = {
-    getHotelsByUserId: `${hotelsBasePath}getHotelsByUserId/:userId`,
-    getHotelById: `${hotelsBasePath}getHotelById/:hotelId`,
-    deleteHotel: `${hotelsBasePath}deleteHotel/:hotelId`,
-    updateHotel: `${hotelsBasePath}updateHotel`,
-    createHotel: `${hotelsBasePath}createHotel`,
+export const hotelRoutes = {
+    getHotelsByUserId: `${hotelBasePath}getHotelsByUserId/:userId`,
+    getHotelById: `${hotelBasePath}getHotelById/:hotelId`,
+    deleteHotel: `${hotelBasePath}deleteHotel/:hotelId`,
+    updateHotel: `${hotelBasePath}updateHotel`,
+    createHotel: `${hotelBasePath}createHotel`,
+}
+
+export const userRoutes = {
+    doLogin: `${userBasePath}doLogin?username=:username&password=:password`
 }

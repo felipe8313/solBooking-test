@@ -3,16 +3,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-interface Props {
-    name: string;
-}
-
-export const Header = (props: Props) => (
+export const Header = () => (
     <AppBar position="static">
         <Toolbar>
             <Typography variant="h6">
-                {`Bienvenido ${props.name}`}
-          </Typography>
+                {`Bienvenido ${sessionStorage.getItem('userName')}`}
+            </Typography>
         </Toolbar>
     </AppBar>
 );

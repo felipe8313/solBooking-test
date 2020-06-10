@@ -1,5 +1,5 @@
 import { Hotel } from '../model/hotel';
-import { hotelsRoutes } from './apiRoutes';
+import { hotelRoutes } from './apiRoutes';
 import { requestConfig, apiMethods } from './helpers';
 
 const getHotelsByUser = (userId: number): Promise<Hotel[]> => {
@@ -7,7 +7,7 @@ const getHotelsByUser = (userId: number): Promise<Hotel[]> => {
         ...requestConfig,
     };
 
-    return fetch(hotelsRoutes.getHotelsByUserId.replace(':userId', userId.toString()), request)
+    return fetch(hotelRoutes.getHotelsByUserId.replace(':userId', userId.toString()), request)
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -25,7 +25,7 @@ const deleteHotel = (hotelId: number): Promise<boolean> => {
         method: apiMethods.DELETE
     };
 
-    return fetch(hotelsRoutes.deleteHotel.replace(':hotelId', hotelId.toString()), request)
+    return fetch(hotelRoutes.deleteHotel.replace(':hotelId', hotelId.toString()), request)
         .then(response => {
             if (response.ok) {
                 return Promise.resolve(true);
@@ -42,7 +42,7 @@ const getHotelById = (hotelId: number): Promise<Hotel> => {
         ...requestConfig,
     };
 
-    return fetch(hotelsRoutes.getHotelById.replace(':hotelId', hotelId.toString()), request)
+    return fetch(hotelRoutes.getHotelById.replace(':hotelId', hotelId.toString()), request)
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -61,7 +61,7 @@ const updateHotel = (hotel: Hotel): Promise<boolean> => {
         body: JSON.stringify(hotel)
     };
 
-    return fetch(hotelsRoutes.updateHotel, request)
+    return fetch(hotelRoutes.updateHotel, request)
         .then(response => {
             if (response.ok) {
                 return Promise.resolve(true);
@@ -82,7 +82,7 @@ const createHotel = (hotel: Hotel, userId: number): Promise<boolean> => {
         body: JSON.stringify({ ...hotel, userId })
     };
 
-    return fetch(hotelsRoutes.createHotel, request)
+    return fetch(hotelRoutes.createHotel, request)
         .then(response => {
             if (response.ok) {
                 return Promise.resolve(true);

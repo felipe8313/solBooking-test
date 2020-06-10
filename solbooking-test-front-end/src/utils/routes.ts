@@ -1,4 +1,5 @@
 export const routes = {
-    home: '/',
+    root: '/',
+    home: '/home',
     editHotel: `/edit-hotel/:id`
 }

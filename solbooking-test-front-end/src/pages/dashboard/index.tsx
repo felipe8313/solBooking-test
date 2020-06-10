@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Hotel } from '../../model/hotel';
 import { hotelService } from '../../services/hotelService';
-import { User } from '../../model/user';
 import { HotelsTable } from './components/hotelsTable';
 import { Filter } from './components/filter';
 import { Paper, Button } from '@material-ui/core';
@@ -11,16 +10,15 @@ import AddIcon from '@material-ui/icons/Add';
 
 import './styles.scss';
 import { routes } from '../../utils/routes';
+import { Header } from '../../common/components/header';
 
-interface Props {
-    user: User;
-}
-
-export const DashboardPage = (props: Props) => {
+export const DashboardPage = () => {
 
     const [hotels, setHotels] = useState<Hotel[]>([]);
     const [filteredHotels, setFilteredHotels] = useState<Hotel[]>([]);
     const [filterText, setFilterText] = useState<string>("");
+
+    const userId = sessionStorage.getItem('userId');
 
     const history = useHistory();
 
@@ -29,7 +27,7 @@ export const DashboardPage = (props: Props) => {
     }, []);
 
     const getHotelList = () => {
-        hotelService.getHotelsByUser(props.user.id).then((hotels) => {
+        hotelService.getHotelsByUser(+userId).then((hotels) => {
             setHotels(hotels);
             setFilteredHotels(hotels);
         }).catch((_) => toast('Error al obtener el listado de hoteles', { type: 'error' }));
@@ -68,20 +66,23 @@ export const DashboardPage = (props: Props) => {
 
     return (
         <Fragment>
-            <Filter filterText={filterText} onChangeFilterText={onChangeFilterText} />
-            <div className="newHotelContainer">
-                <Button variant="contained" color="primary" onClick={newHotel} className="newHotelButton">
-                    <AddIcon /> Nuevo hotel
+            <Header />
+            <div className="container">
+                <Filter filterText={filterText} onChangeFilterText={onChangeFilterText} />
+                <div className="newHotelContainer">
+                    <Button variant="contained" color="primary" onClick={newHotel} className="newHotelButton">
+                        <AddIcon /> Nuevo hotel
                 </Button>
+                </div>
+                <Paper elevation={2} className="hotelsListContainer">
+                    <h3>Listado de hoteles</h3>
+                    <HotelsTable
+                        hotels={filteredHotels}
+                        removeHotel={removeHotel}
+                        editHotel={editHotel}
+                    />
+                </Paper>
             </div>
-            <Paper elevation={2} className="hotelsListContainer">
-                <h3>Listado de hoteles</h3>
-                <HotelsTable
-                    hotels={filteredHotels}
-                    removeHotel={removeHotel}
-                    editHotel={editHotel}
-                />
-            </Paper>
         </Fragment>
     );
 }
